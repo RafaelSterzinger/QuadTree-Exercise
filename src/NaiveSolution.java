@@ -28,6 +28,12 @@ public class NaiveSolution {
         return data;
     }
 
+    public void junctionsInRadiusPrint(double xPoint, double yPoint, double radius) {
+        int[] junctions = junctionsInRadius(xPoint, yPoint, radius);
+        System.out.println("Junctions less than " + radius + " units from x= " + xPoint + " y= " + yPoint +
+                "\n\t> Airports: " + junctions[0] + " Trainstations: " + junctions[1]);
+    }
+
     public int[] junctionsInRadius(double xPoint, double yPoint, double radius) {
         int countTrainstation = 0;
         int countAirports = 0;
@@ -47,35 +53,20 @@ public class NaiveSolution {
 
         }
 
-        return new int[] {countTrainstation,countAirports};
+        return new int[] {countAirports, countTrainstation};
     }
 
-    public void junctionsInRadiusPrint(double xPoint, double yPoint, double radius) {
-        int countTrainstation = 0;
-        int countAirports = 0;
+    public void airportsWithInTrainstationsAmountPrint(int trainstationAmount, int radius){
+        int count = airportsWithInTrainstationsAmount(trainstationAmount, radius);
 
-        for (NodeData controlPoint: data) {
-
-            double distance = Math.sqrt(Math.pow(xPoint - controlPoint.X(), 2) + Math.pow(yPoint - controlPoint.Y(), 2));      //Satz von Pythagoras
-
-            if (distance < radius){
-                if (controlPoint.getType().equals("TRAINSTATION")) {
-                    countTrainstation++;
-                }
-                else {
-                    countAirports++;
-                }
-            }
-
-        }
-
-        System.out.println("Junctions less than " + radius + " units from x= " + xPoint + " y= " + yPoint +
-                                "\n\t> Airports: " + countAirports + " Trainstations: " + countTrainstation);
+        System.out.println("Airports with at least " + trainstationAmount + " Trainstations less than " + radius + " units away" +
+                "\n\t" + "> " + count);
     }
+
+
 
 
     //return the number of airports that have got more than trainstationAmount trainstations within a given radius
-
     public int airportsWithInTrainstationsAmount(int trainstationAmount, int radius){
         int count = 0;
 
@@ -87,9 +78,6 @@ public class NaiveSolution {
                 }
             }
         }
-
-        System.out.println("Airports with at least " + trainstationAmount + " Trainstations less than " + radius + " units away" +
-                                "\n\t" + "> " + count);
 
         return count;
     }

@@ -2,9 +2,9 @@ public class Main {
     public static void main(String[] args) {
         //Naive Solution
         NaiveSolution test = new NaiveSolution();
-        //test.airportsWithInTrainstationsAmount(1,5);
-        test.airportsWithInTrainstationsAmount(15,20);
-        System.out.println("lel");
-
+        //test.junctionsInRadiusPrint(0,0,575);
+        //test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
+        //test.airportsWithInTrainstationsAmountPrint(1,5);
+        //test.airportsWithInTrainstationsAmountPrint(15,20);
     }
 }
