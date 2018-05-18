@@ -4,7 +4,7 @@ public class Main {
         NaiveSolution test = new NaiveSolution();
         //test.airportsWithInTrainstationsAmount(1,5);
         test.airportsWithInTrainstationsAmount(15,20);
-
+        System.out.println("lel");
 
     }
 }
