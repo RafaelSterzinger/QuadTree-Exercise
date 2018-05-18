@@ -6,10 +6,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         //Naive Solution
-        NaiveSolution test = new NaiveSolution();
+        NaiveSolution test = new NaiveSolution(read());
         test.junctionsInRadiusPrint(0,0,575);
         test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
-        test.airportsWithInTrainstationsAmountPrint(1,5);
+        test.airportsWithInTrainstationsAmountPrint(5,1);
         test.airportsWithInTrainstationsAmountPrint(20,15);
 
         //QuadTree
@@ -18,14 +18,14 @@ public class Main {
     }
 
     //read wird für beide Lösungen verwendet
-    public static ArrayList<NodeData> read() {
+    private static ArrayList<NodeData> read() {
         ArrayList<NodeData> data = new ArrayList<>();
 
         try (Scanner s = new Scanner(
                 new File(System.getProperty("user.dir") +
                         "/data/junctions.csv"), "UTF-8")) {
             // Benutzen Sie das Scanner-Objekt s hier
-            s.useDelimiter(";|\\n");
+            s.useDelimiter(";|\\r\\n");
             while (s.hasNext()) {
                 data.add(new NodeData(s.next(), Double.valueOf(s.next()), Double.valueOf(s.next()), s.next()));             //neuer Knoten erstellen mit 4 nexts und adden
             }
@@ -35,4 +35,5 @@ public class Main {
         }
         return data;
     }
+
 }

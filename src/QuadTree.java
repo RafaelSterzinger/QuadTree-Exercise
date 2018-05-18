@@ -32,7 +32,7 @@ public class QuadTree {
     }
 
     //Creats children for Quadtree
-    public void creatLeafs(){
+    private void creatLeafs(){
         double xMittelwert = (topLeft.getX() + botRight.getX())/2;
         double yMittlewert = (topLeft.getY() + botRight.getY())/2;
         Point newOrigin = new Point(xMittelwert, yMittlewert);

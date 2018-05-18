@@ -1,31 +1,10 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class NaiveSolution {
     private ArrayList<NodeData> data;
 
-    public NaiveSolution() {
-        this.data = read();
-    }
-
-    public static ArrayList<NodeData> read() {
-        ArrayList<NodeData> data = new ArrayList<>();
-
-        try (Scanner s = new Scanner(
-                new File(System.getProperty("user.dir") +
-                        "/data/junctions.csv"), "UTF-8")) {
-            // Benutzen Sie das Scanner-Objekt s hier
-            s.useDelimiter(";|\\n");
-            while (s.hasNext()) {
-                data.add(new NodeData(s.next(), Double.valueOf(s.next()), Double.valueOf(s.next()), s.next()));             //neuer Knoten erstellen mit 4 nexts und adden
-            }
-        } catch (FileNotFoundException e) {
-            // junctions.csv wurde nicht gefunden
-            System.exit(1);
-        }
-        return data;
+    public NaiveSolution(ArrayList<NodeData> data) {
+        this.data = data;
     }
 
     public void junctionsInRadiusPrint(double xPoint, double yPoint, double radius) {
@@ -62,9 +41,6 @@ public class NaiveSolution {
         System.out.println("Airports with at least " + trainstationAmount + " Trainstations less than " + radius + " units away" +
                 "\n\t" + "> " + count);
     }
-
-
-
 
     //return the number of airports that have got more than trainstationAmount trainstations within a given radius
     public int airportsWithInTrainstationsAmount(int trainstationAmount, int radius){
