@@ -6,5 +6,6 @@ public class Main {
         //test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
         //test.airportsWithInTrainstationsAmountPrint(1,5);
         test.airportsWithInTrainstationsAmountPrint(20,15);
+        System.out.println("hallo");
     }
 }
