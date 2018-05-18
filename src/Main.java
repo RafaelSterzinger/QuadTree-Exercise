@@ -7,6 +7,8 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<String> data = new ArrayList<>();
 
+        System.out.println("LOL");
+
         try (Scanner s = new Scanner(
                 new File(System.getProperty("user.dir") +
                         "/data/junctions.csv"), "UTF-8" )) {
