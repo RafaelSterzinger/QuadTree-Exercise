@@ -73,7 +73,7 @@ public class NaiveSolution {
         for (NodeData airport: data) {
             if (airport.getType().equals("AIRPORT")) {
                 int[] junctions = junctionsInRadius(airport.X(),airport.Y(),radius);                                    //Array with the amount of {trainstations,airports]
-                if (junctions[0] >= trainstationAmount){
+                if (junctions[1] >= trainstationAmount){
                     count++;
                 }
             }
