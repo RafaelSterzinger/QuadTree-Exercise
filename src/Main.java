@@ -5,19 +5,27 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        //Draw
+//        StdDraw.setCanvasSize(1000, 1000 );
+//        StdDraw.setXscale(-25000, 25000);
+//        StdDraw.setYscale(-25000, 25000);
+
+
+
         //Naive Solution
-        NaiveSolution test = new NaiveSolution(read());
-        test.junctionsInRadiusPrint(0,0,575);
-        test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
-        test.airportsWithInTrainstationsAmountPrint(5,1);
-        test.airportsWithInTrainstationsAmountPrint(20,15);
+//        NaiveSolution test = new NaiveSolution(read());
+//        test.junctionsInRadiusPrint(0,0,575);
+//        test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
+//        test.airportsWithInTrainstationsAmountPrint(5,1);
+//        test.airportsWithInTrainstationsAmountPrint(20,15);
 
         //QuadTree
-        //QuadTree test = new QuadTree(read());
-        //System.out.println(test.junctionsInRadius(1818.54657,5813.29982, 100)[0]);
+        QuadTree test = new QuadTree(read());
+        System.out.println();
+        System.out.println(test.junctionsInRadius(1818.54657,5813.29982, 100)[0]);
     }
 
-    //read wird für beide Lösungen verwendet
+    //Read wird für beide Lösungen verwendet
     private static ArrayList<NodeData> read() {
         ArrayList<NodeData> data = new ArrayList<>();
 

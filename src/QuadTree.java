@@ -3,114 +3,235 @@ import java.util.ArrayList;
 public class QuadTree {
 
     private NodeData junction;
-    private Point topLeft;
-    private Point botRight;
-    private QuadTree NW,NO,SW,SO;
+    private Point topLeftPoint;
+    private Point botRightPoint;
+    private QuadTree topLeft,topRight,botLeft,botRight;
     private static ArrayList<NodeData> content;
 
-    private QuadTree(Point topLeft, Point botRight){
-        this.topLeft = topLeft;
-        this.botRight = botRight;
+    private QuadTree(Point topLeftPoint, Point botRightPoint){
+        this.topLeftPoint = topLeftPoint;
+        this.botRightPoint = botRightPoint;
     }
 
     public QuadTree(ArrayList<NodeData> junctions) {
-        double minX = Double.MIN_VALUE,minY = Double.MIN_VALUE;
-        double maxX = Double.MAX_VALUE,maxY = Double.MIN_VALUE;
+        /*
+        double minX = Double.MAX_VALUE,minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE,maxY = Double.MIN_VALUE;
         for (NodeData junction: junctions) {                                                                          //Ermittelt Dimension der Ebene
             if (junction.X() > maxX){       maxX = junction.X(); }
             else if (junction.X() < minX){  minX = junction.X(); }
             if (junction.Y() > maxY){       maxY = junction.Y(); }
             else if (junction.Y() < minY){  minY = junction.Y(); }
         }
+        */
 
-        this.topLeft = new Point(minX, maxY);
-        this.botRight = new Point(maxX, minY);
+        this.topLeftPoint = new Point(Double.MIN_VALUE, Double.MAX_VALUE);
+        this.botRightPoint = new Point(Double.MIN_VALUE, Double.MAX_VALUE);
 
-        creatLeafs();
         content = junctions;
         fill();
     }
 
-    //Creats children for Quadtree
-    private void creatLeafs(){
-        double xMittelwert = (topLeft.getX() + botRight.getX())/2;
-        double yMittlewert = (topLeft.getY() + botRight.getY())/2;
-        Point newOrigin = new Point(xMittelwert, yMittlewert);
-
-        //Blatt links/oben
-        NW = new QuadTree(topLeft, newOrigin);
-        //Blatt rechts/oben
-        NO = new QuadTree(new Point(newOrigin.getX(), topLeft.getY()), new Point(botRight.getX(), newOrigin.getY()));
-        //Blatt links/unten
-        SW = new QuadTree(new Point(topLeft.getX(), newOrigin.getY()), new Point(newOrigin.getX(), botRight.getY()));
-        //Blatt rechts/unten
-        SO = new QuadTree(newOrigin, botRight);
-    }
-
-
     private void fill(){
        for (NodeData insert: content) {
-            if (junction == null){
-                junction = insert;
-            }
-            else {
                 add(insert);
-            }
+                //StdDraw.point(insert.X(),insert.Y());
        }
     }
 
-    private void add(NodeData junction){
-        if (this.junction == null){
-            this.junction = junction;
-            creatLeafs();
+    private void add(NodeData junction) {
+        if (junction == null) {
+            return;
         }
-        else {
-            if (NodeInBoundary(NW, junction)) {
-                NW.add(junction);
-            } else if (NodeInBoundary(NO, junction)) {
-                NO.add(junction);
-            } else if (NodeInBoundary(SW, junction)) {
-                SW.add(junction);
-            } else if (NodeInBoundary(SO, junction)) {
-                SO.add(junction);
+        if (!inBoundary(new QuadTree(topLeftPoint, botRightPoint), new Point(junction.X(), junction.Y()))) {
+            return;
+        }
+
+        if (Math.abs(topLeftPoint.getY() - junction.Y()) <= 1 && Math.abs(botRightPoint.getX() - junction.X()) <= 1) {
+            this.junction = junction;
+            return;
+        }
+
+        double xMittelwert = (topLeftPoint.getX() + botRightPoint.getX()) / 2;
+        double yMittlewert = (topLeftPoint.getY() + botRightPoint.getY()) / 2;
+        Point newOrigin = Origin();
+
+        if (xMittelwert <= junction.X()) {                                                                               ////Kontrolle auf zu untersuchendem Quadrant
+
+            if (yMittlewert <= junction.Y()) {
+
+                if (topRight == null) {
+                    topRight = new QuadTree(new Point(newOrigin.getX(), topLeftPoint.getY()), new Point(botRightPoint.getX(), newOrigin.getY()));
+                }
+                topRight.add(junction);
+
+            } else {
+                if (botRight == null) {
+                    botRight = new QuadTree(newOrigin, botRightPoint);
+                }
+                botRight.add(junction);
+            }
+
+        } else {
+            if (yMittlewert <= junction.Y()) {
+
+                if (topLeft == null) {
+                    topLeft = new QuadTree(topLeftPoint, newOrigin);
+                }
+                topLeft.add(junction);
+
+            } else {
+                if (botLeft == null) {
+                    botLeft = new QuadTree(new Point(topLeftPoint.getX(), newOrigin.getY()), new Point(newOrigin.getX(), botRightPoint.getY()));
+                }
+                botLeft.add(junction);
+
+
             }
         }
     }
 
     //Schaut um der Knoten in den Quadranten passt.
-    private boolean NodeInBoundary(QuadTree quadrant, NodeData junction){
-        double x = junction.X();
-        double y = junction.Y();
+    private boolean inBoundary(QuadTree quadrant, Point point){
+        double x = point.getX();
+        double y = point.getY();
 
-        if (quadrant.topLeft.getX() < junction.X() && quadrant.botRight.getX() > junction.X()){
-            if (quadrant.topLeft.getY() > junction.Y() && quadrant.botRight.getY() < junction.Y()){
+        if (quadrant.topLeftPoint.getX() < junction.X() && quadrant.botRightPoint.getX() > junction.X()){
+            if (quadrant.topLeftPoint.getY() > junction.Y() && quadrant.botRightPoint.getY() < junction.Y()){
                 return true;
             }
         }
         return false;
     }
 
-    //Noch nicht fertig
+    private Point Origin(){
+        double xMittelwert = (topLeftPoint.getX() + botRightPoint.getX()) / 2;
+        double yMittlewert = (topLeftPoint.getY() + botRightPoint.getY()) / 2;
+
+        return new Point(xMittelwert, yMittlewert);
+    }
+
     public int[] junctionsInRadius(double xPoint, double yPoint, double radius) {
-        int[] count = new int[2];
-        int countAirports = 0, countTrainstation = 0;
+        return junctionsInRadius(xPoint, yPoint, radius, new int[2]);
+    }
+
+    private int[] junctionsInRadius(double xPoint, double yPoint, double radius, int[] count) {
+        if (junction != null) {
+            double distance = Math.sqrt(Math.pow(xPoint - junction.X(), 2) + Math.pow(yPoint - junction.Y(), 2));      //Satz von Pythagoras
+
+            if (distance < radius) {
+                if (junction.getType().equals("TRAINSTATION")) {
+                    count[1]++;
+                } else {
+                    count[0]++;
+                }
+            }
+        }
+
+        Point Origin = Origin();
+        Point[] circleSquare = new Point[4];
+        QuadTree[] quadranten = new QuadTree[4];
+
+        quadranten[0] = new QuadTree(new Point(Double.MIN_VALUE, Double.MAX_VALUE), Origin);
+        quadranten[1] = new QuadTree(new Point(Origin.getX(), Double.MAX_VALUE), new Point(Double.MAX_VALUE, Origin.getY()));
+        quadranten[2] = new QuadTree(new Point(Double.MIN_VALUE, Origin.getY()), new Point(Origin.getX(), Double.MIN_VALUE));
+        quadranten[3] = new QuadTree(Origin, new Point(Double.MAX_VALUE, Double.MIN_VALUE));
+
+
+        circleSquare[0] = new Point(xPoint - radius, yPoint + radius);                                        //TL
+        circleSquare[1] = new Point(xPoint + radius, yPoint + radius);                                        //TR
+        circleSquare[2] = new Point(xPoint - radius, yPoint - radius);                                        //BL
+        circleSquare[3] = new Point(xPoint + radius, yPoint - radius);                                        //BR
+
+        for (int quadrant = 0; quadrant < 4; quadrant++) {
+            for (int point = 0; point < 4; point++) {
+                if (inBoundary(quadranten[quadrant], circleSquare[point])) {
+                    quadranten[quadrant].junctionsInRadius(xPoint, yPoint, radius, count);
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+
+        /*
+        //angenommen topRight
+
+        if (Math.abs(xPoint - Origin.getX()) <= radius){                                                                //Distanzu <= radius
+            if (Math.abs(yPoint - Origin.getY()) <= radius) {
+                if (xPoint >= Origin.getX()) {
+                    if(yPoint >= Origin.getY()){
+                        topLeft.junctionsInRadius(xPoint, yPoint, radius, count);
+                        topRight.junctionsInRadius(xPoint, yPoint, radius, count);
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                else {
+                    topRight.junctionsInRadius(xPoint, yPoint, radius, count);
+                }
+                else{
+                    if (xPoint >= Origin.getX()) {
+                        topLeft.junctionsInRadius(xPoint, yPoint, radius, count);
+                    } else {
+                        topRight.junctionsInRadius(xPoint, yPoint, radius, count);
+                    }
+                }
+
+            }
+        }
+
+        if (Math.abs(yPoint - Origin.getY()) >= radius){                                                                //Distanzu <= radius
+            if (yPoint >= Origin.getY()){
+                botLeft.junctionsInRadius(xPoint, yPoint, radius, count);
+            }
+            else{
+                botRight.junctionsInRadius(xPoint, yPoint, radius, count);
+            }
+        }
+
+
+        if (xPoint - Origin.getX() >= radius){
+            topLeft.junctionsInRadius(xPoint, yPoint, radius, count);
+        }
+        else if {xPoint - Origin.getX()
+
+        }
+
+
+
+
+
+
         if (junction != null) {
             NodeData check = new NodeData(null, xPoint, yPoint, null);
 
-            if (NodeInBoundary(NW, check)) {
-                count = NW.junctionsInRadius(xPoint, yPoint, radius);
+            if (inBoundary(topLeft, check)) {
+                count = topLeft.junctionsInRadius(xPoint, yPoint, radius);
                 countAirports += count[0];
                 countTrainstation += count[1];
-            } else if (NodeInBoundary(NO, check)) {
-                count = NO.junctionsInRadius(xPoint, yPoint, radius);
+            } else if (inBoundary(topRight, check)) {
+                count = topRight.junctionsInRadius(xPoint, yPoint, radius);
                 countAirports += count[0];
                 countTrainstation += count[1];
-            } else if (NodeInBoundary(SW, check)) {
-                count = SW.junctionsInRadius(xPoint, yPoint, radius);
+            } else if (inBoundary(botLeft, check)) {
+                count = botLeft.junctionsInRadius(xPoint, yPoint, radius);
                 countAirports += count[0];
                 countTrainstation += count[1];
-            } else if (NodeInBoundary(SO, check)) {
-                count = SO.junctionsInRadius(xPoint, yPoint, radius);
+            } else if (inBoundary(botRight, check)) {
+                count = botRight.junctionsInRadius(xPoint, yPoint, radius);
                 countAirports += count[0];
                 countTrainstation += count[1];
             }
@@ -145,10 +266,11 @@ public class QuadTree {
         }
 
         return count;
-    }
-    */
+
+   }
 
 
 
 
+*/
 }
