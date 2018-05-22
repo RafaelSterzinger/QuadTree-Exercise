@@ -22,7 +22,7 @@ public class Main {
         //QuadTree
         QuadTree test = new QuadTree(read());
         System.out.println();
-        System.out.println(test.junctionsInRadius(1818.54657,5813.29982, 100)[0]);
+        System.out.println(test.junctionsInRadius(1818.54657,5813.29982, 100)[1]);
     }
 
     //Read wird für beide Lösungen verwendet

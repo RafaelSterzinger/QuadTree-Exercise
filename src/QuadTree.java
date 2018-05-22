@@ -14,7 +14,7 @@ public class QuadTree {
     }
 
     public QuadTree(ArrayList<NodeData> junctions) {
-        /*
+
         double minX = Double.MAX_VALUE,minY = Double.MAX_VALUE;
         double maxX = Double.MIN_VALUE,maxY = Double.MIN_VALUE;
         for (NodeData junction: junctions) {                                                                          //Ermittelt Dimension der Ebene
@@ -23,10 +23,9 @@ public class QuadTree {
             if (junction.Y() > maxY){       maxY = junction.Y(); }
             else if (junction.Y() < minY){  minY = junction.Y(); }
         }
-        */
 
-        this.topLeftPoint = new Point(Double.MIN_VALUE, Double.MAX_VALUE);
-        this.botRightPoint = new Point(Double.MIN_VALUE, Double.MAX_VALUE);
+        this.topLeftPoint = new Point(minX,maxY);
+        this.botRightPoint = new Point(maxX,minY);
 
         content = junctions;
         fill();
@@ -96,8 +95,8 @@ public class QuadTree {
         double x = point.getX();
         double y = point.getY();
 
-        if (quadrant.topLeftPoint.getX() < junction.X() && quadrant.botRightPoint.getX() > junction.X()){
-            if (quadrant.topLeftPoint.getY() > junction.Y() && quadrant.botRightPoint.getY() < junction.Y()){
+        if (quadrant.topLeftPoint.getX() < x && quadrant.botRightPoint.getX() > x){
+            if (quadrant.topLeftPoint.getY() > y && quadrant.botRightPoint.getY() < y){
                 return true;
             }
         }
@@ -126,16 +125,24 @@ public class QuadTree {
                     count[0]++;
                 }
             }
+            return count;
         }
 
         Point Origin = Origin();
         Point[] circleSquare = new Point[4];
         QuadTree[] quadranten = new QuadTree[4];
+        QuadTree[] realQuads = new QuadTree[4];
 
         quadranten[0] = new QuadTree(new Point(Double.MIN_VALUE, Double.MAX_VALUE), Origin);
         quadranten[1] = new QuadTree(new Point(Origin.getX(), Double.MAX_VALUE), new Point(Double.MAX_VALUE, Origin.getY()));
         quadranten[2] = new QuadTree(new Point(Double.MIN_VALUE, Origin.getY()), new Point(Origin.getX(), Double.MIN_VALUE));
         quadranten[3] = new QuadTree(Origin, new Point(Double.MAX_VALUE, Double.MIN_VALUE));
+
+        realQuads[0] = topLeft;
+        realQuads[1] = topRight;
+        realQuads[2] = botLeft;
+        realQuads[3] = botRight;
+
 
 
         circleSquare[0] = new Point(xPoint - radius, yPoint + radius);                                        //TL
@@ -144,10 +151,12 @@ public class QuadTree {
         circleSquare[3] = new Point(xPoint + radius, yPoint - radius);                                        //BR
 
         for (int quadrant = 0; quadrant < 4; quadrant++) {
+            if (realQuads[quadrant]!=null) {
             for (int point = 0; point < 4; point++) {
                 if (inBoundary(quadranten[quadrant], circleSquare[point])) {
-                    quadranten[quadrant].junctionsInRadius(xPoint, yPoint, radius, count);
-                    break;
+                        realQuads[quadrant].junctionsInRadius(xPoint, yPoint, radius, count);
+                        break;
+                    }
                 }
             }
         }
