@@ -20,9 +20,9 @@ public class Main {
 //        test.airportsWithInTrainstationsAmountPrint(20,15);
 
         //QuadTree
-        QuadTree test = new QuadTree(read());
+        Tree test = new Tree(read());
         System.out.println();
-        System.out.println(test.junctionsInRadius(1818.54657,5813.29982, 100)[1]);
+        test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
     }
 
     //Read wird für beide Lösungen verwendet
