@@ -11,7 +11,6 @@ public class Main {
 //        StdDraw.setYscale(-25000, 25000);
 
 
-
         //Naive Solution
         NaiveSolution testNaive = new NaiveSolution(read());
         testNaive.junctionsInRadiusPrint(0,0,575);
