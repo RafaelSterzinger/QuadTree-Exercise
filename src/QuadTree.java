@@ -1,6 +1,6 @@
 public interface QuadTree {
-    Point topLeftPoint = null;
-    Point botRightPoint = null;
-    QuadTree add(NodeData junction);
+    QuadTreeRoot add(NodeData junction);
     void junctionsInRadius(double x, double y, double radius, int[] count);
+    Point getTopLeftPoint();
+    Point getBotRightPoint();
 }

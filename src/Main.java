@@ -13,16 +13,21 @@ public class Main {
 
 
         //Naive Solution
-//        NaiveSolution test = new NaiveSolution(read());
-//        test.junctionsInRadiusPrint(0,0,575);
-//        test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
-//        test.airportsWithInTrainstationsAmountPrint(5,1);
-//        test.airportsWithInTrainstationsAmountPrint(20,15);
+        NaiveSolution testNaive = new NaiveSolution(read());
+        testNaive.junctionsInRadiusPrint(0,0,575);
+        testNaive.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
+        testNaive.airportsWithInTrainstationsAmountPrint(5,1);
+        testNaive.airportsWithInTrainstationsAmountPrint(20,15);
 
-        //QuadTree
-        Tree test = new Tree(read());
         System.out.println();
-        test.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
+        //QuadTree
+        Tree testQuad = new Tree(read());
+        testQuad.junctionsInRadiusPrint(0,0,575);
+        testQuad.junctionsInRadiusPrint(1818.54657,5813.29982, 100);
+        testQuad.airportsWithInTrainstationsAmountPrint(5,1);
+        testQuad.airportsWithInTrainstationsAmountPrint(20,15);
+
+
     }
 
     //Read wird für beide Lösungen verwendet

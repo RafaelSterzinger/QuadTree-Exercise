@@ -20,7 +20,7 @@ public class QuadTreeRoot implements QuadTree {
         this.botRight = botRight;
     }
 
-    public QuadTree add(NodeData junction) {
+    public QuadTreeRoot add(NodeData junction) {
         double xMittelwert = (topLeftPoint.getX() + botRightPoint.getX()) / 2;
         double yMittlewert = (topLeftPoint.getY() + botRightPoint.getY()) / 2;
         Point newOrigin = Origin();
@@ -99,10 +99,10 @@ public class QuadTreeRoot implements QuadTree {
         double calcX;
         double calcY;
 
-        double TLX = quadrant.topLeftPoint.getX();
-        double TLY = quadrant.topLeftPoint.getY();
-        double BRX = quadrant.botRightPoint.getX();
-        double BRY = quadrant.botRightPoint.getY();
+        double TLX = quadrant.getTopLeftPoint().getX();
+        double TLY = quadrant.getTopLeftPoint().getY();
+        double BRX = quadrant.getBotRightPoint().getX();
+        double BRY = quadrant.getBotRightPoint().getY();
 
 
         if (x <= TLX){
@@ -115,11 +115,11 @@ public class QuadTreeRoot implements QuadTree {
             calcX = x;
         }
 
-        if (y <= TLY){
-            calcY = TLY;
-        }
-        else if(y >= BRY){
+        if (y <= BRY){
             calcY = BRY;
+        }
+        else if(y >= TLY){
+            calcY = TLY;
         }
         else {
             calcY = y;
@@ -141,9 +141,17 @@ public class QuadTreeRoot implements QuadTree {
         realQuads[3] = botRight;
 
         for (int i = 0; i < 4; i++) {
-            if (intersectQuadrant(realQuads[i], xPoint,yPoint, radius)){
-                realQuads[i].junctionsInRadius(xPoint, yPoint, radius, count);
-            }
+                if (intersectQuadrant(realQuads[i], xPoint, yPoint, radius)) {
+                    realQuads[i].junctionsInRadius(xPoint, yPoint, radius, count);
+                }
         }
+    }
+
+    public Point getTopLeftPoint() {
+        return topLeftPoint;
+    }
+
+    public Point getBotRightPoint() {
+        return botRightPoint;
     }
 }

@@ -10,10 +10,10 @@ public class QuadTreeLeaf implements QuadTree{
     }
 
     @Override
-    public QuadTree add(NodeData junction) {
-
+    public QuadTreeRoot add(NodeData junction) {
         QuadTreeRoot subRoot = new QuadTreeRoot(topLeftPoint, botRightPoint);
-        subRoot.add(junction);
+        subRoot = subRoot.add(this.junction);
+        subRoot = subRoot.add(junction);
 
         return subRoot;
     }
@@ -28,5 +28,13 @@ public class QuadTreeLeaf implements QuadTree{
                 count[0]++;
             }
         }
+    }
+
+    public Point getTopLeftPoint() {
+        return topLeftPoint;
+    }
+
+    public Point getBotRightPoint() {
+        return botRightPoint;
     }
 }

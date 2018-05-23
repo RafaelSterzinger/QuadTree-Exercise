@@ -35,15 +35,17 @@ public class NaiveSolution {
         return new int[] {countAirports, countTrainstation};
     }
 
-    public void airportsWithInTrainstationsAmountPrint(int trainstationAmount, int radius){
+    public void airportsWithInTrainstationsAmountPrint(int trainstationAmount, double radius){
+        double time = System.currentTimeMillis();
         int count = airportsWithInTrainstationsAmount(trainstationAmount, radius);
-
+        time -= System.currentTimeMillis();
+        System.out.println(time);
         System.out.println("Airports with at least " + trainstationAmount + " Trainstations less than " + radius + " units away" +
                 "\n\t" + "> " + count);
     }
 
     //return the number of airports that have got more than trainstationAmount trainstations within a given radius
-    public int airportsWithInTrainstationsAmount(int trainstationAmount, int radius){
+    public int airportsWithInTrainstationsAmount(int trainstationAmount, double radius){
         int count = 0;
 
         for (NodeData airport: data) {
