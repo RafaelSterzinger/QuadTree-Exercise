@@ -25,7 +25,7 @@ public class QuadTreeRoot implements QuadTree {
         double yMittlewert = (topLeftPoint.getY() + botRightPoint.getY()) / 2;
         Point newOrigin = Origin();
 
-        if (xMittelwert <= junction.X()) {                                                                               ////Kontrolle auf zu untersuchendem Quadrant
+        if (xMittelwert <= junction.X()) {                                                                              //Kontrolle auf zu untersuchendem Quadrant
             if (yMittlewert <= junction.Y()) {
                 if (topRight == null) {                                                                                 //wenn da noch kein Knoten -> erzeuge leaf und geh da hinein
                     topRight = new QuadTreeLeaf(junction,new Point(newOrigin.getX(), topLeftPoint.getY()), new Point(botRightPoint.getX(), newOrigin.getY()));
@@ -104,7 +104,7 @@ public class QuadTreeRoot implements QuadTree {
         double BRX = quadrant.getBotRightPoint().getX();
         double BRY = quadrant.getBotRightPoint().getY();
 
-
+        //Punktüberprüfungen in eine Methode schreiben
         if (x <= TLX){
             calcX = TLX;
         }
