@@ -43,4 +43,17 @@ public class Main {
         return data;
     }
 
+    /*Fragen Allgemein:
+    Weil wir uns darunter am meisten vorstellen konnten.(Ebenen ident)
+    Bei dichten Datenpunkten viele rekursive Aufrufe. Gleichmäßig verteilt bzw. große Abstände führen zu keinem Geschwindigkeitsverlust.
+    War ident. Datenstruktur mussten Fehler ausgemerzt werden (In jedem Knoten war Inhalt), Abfrage erst durchdacht werden. Beides hat gleichviel Zeit gekostet.
+    Bei sehr kleinem Radius ist die Abfrage schneller, sonst gewinnt die Konstruktion überwiegend.
+    1 zu 7. Naive 1 Stunde und Effizent 7 Stunden.
+
+    Fragen QuadTree:
+    Es muss darauf geachtet werden, dass keine identen Daten hinzugefügt werden(endlos Rekursion, bei gleichen (x,y) Werten)
+    Bei engzusammenliegenden Knoten könnte der QuadTree zu einer Liste entarten.
+
+     */
+
 }

@@ -32,21 +32,15 @@ public class Tree {
     }
 
     public void junctionsInRadiusPrint(double xPoint, double yPoint, double radius) {
-        double time = System.currentTimeMillis();
         int[] junctions = new int[2];
         root.junctionsInRadius(xPoint, yPoint, radius, junctions);
-        time -= System.currentTimeMillis();
-        System.out.println(time);
         System.out.println("Junctions less than " + radius + " units from x= " + xPoint + " y= " + yPoint +
                 "\n\t> Airports: " + junctions[0] + " Trainstations: " + junctions[1]);
 
     }
 
     public void airportsWithInTrainstationsAmountPrint(int trainstationAmount, int radius){
-        double time = System.currentTimeMillis();
         int count = airportsWithInTrainstationsAmount(trainstationAmount, radius);
-        time -= System.currentTimeMillis();
-        System.out.println(time);
         System.out.println("Airports with at least " + trainstationAmount + " Trainstations less than " + radius + " units away" +
                 "\n\t" + "> " + count);
     }

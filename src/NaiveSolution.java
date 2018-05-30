@@ -35,10 +35,7 @@ public class NaiveSolution {
     }
 
     public void airportsWithInTrainstationsAmountPrint(int trainstationAmount, double radius){
-        double time = System.currentTimeMillis();
         int count = airportsWithInTrainstationsAmount(trainstationAmount, radius);
-        time -= System.currentTimeMillis();
-        System.out.println(time);
         System.out.println("Airports with at least " + trainstationAmount + " Trainstations less than " + radius + " units away" +
                 "\n\t" + "> " + count);
     }
