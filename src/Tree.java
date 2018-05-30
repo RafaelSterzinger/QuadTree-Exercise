@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 
 public class Tree {
-    private static ArrayList<NodeData> content;
+    private ArrayList<NodeData> content;
     private QuadTree root;
 
+    //calculates the MAX - MIN dimensions of the QuadTree and fills it with the given content
     public Tree(ArrayList<NodeData> content) {
         double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
         double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE;
-        for (NodeData junction : content) {                                                                          //Ermittelt Dimension der Ebene
+        for (NodeData junction : content) {
             if (junction.X() > maxX) {
                 maxX = junction.X();
             } else if (junction.X() < minX) {
@@ -27,7 +28,6 @@ public class Tree {
     private void fill(){
         for (NodeData insert: content) {
             root = root.add(insert);
-            //StdDraw.point(insert.X(),insert.Y());
         }
     }
 
@@ -56,9 +56,9 @@ public class Tree {
         int count = 0;
 
         for (NodeData airport: content) {
-            if (airport.getType().equals("AIRPORT")) {
+            if (airport.getType() == Type.AIRPORT) {
                 int junctions[] = new int[2];
-                root.junctionsInRadius(airport.X(),airport.Y(),radius, junctions);                                    //Array with the amount of {trainstations,airports]
+                root.junctionsInRadius(airport.X(),airport.Y(),radius, junctions);                                    //Array with the amount of {trainstations,airports}
                 if (junctions[1] >= trainstationAmount){
                     count++;
                 }

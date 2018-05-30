@@ -10,6 +10,7 @@ public class QuadTreeLeaf implements QuadTree{
     }
 
     @Override
+    //creates a new QuadTree inplace of the Leaf and then adds the old leaf as well as the new junction to the QuadTree
     public QuadTreeRoot add(NodeData junction) {
         QuadTreeRoot subRoot = new QuadTreeRoot(topLeftPoint, botRightPoint);
         subRoot = subRoot.add(this.junction);
@@ -19,9 +20,9 @@ public class QuadTreeLeaf implements QuadTree{
     }
 
     public void junctionsInRadius(double x, double y, double radius, int[] count){
-        double distance = Math.sqrt(Math.pow(x - junction.X(), 2) + Math.pow(y - junction.Y(), 2));      //Satz von Pythagoras
+        double distance = Math.sqrt((x - junction.X()) * (x - junction.X()) + (y - junction.Y()) * (y - junction.Y()));      //Satz von Pythagoras
         if (distance <= radius){
-            if (junction.getType().equals("TRAINSTATION")) {
+            if (junction.getType() == Type.TRAINSTATION) {
                 count[1]++;
             }
             else {
@@ -37,4 +38,5 @@ public class QuadTreeLeaf implements QuadTree{
     public Point getBotRightPoint() {
         return botRightPoint;
     }
+
 }

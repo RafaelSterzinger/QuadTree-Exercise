@@ -5,11 +5,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //Draw
-//        StdDraw.setCanvasSize(1000, 1000 );
-//        StdDraw.setXscale(-25000, 25000);
-//        StdDraw.setYscale(-25000, 25000);
-
 
         //Naive Solution
         NaiveSolution testNaive = new NaiveSolution(read());
