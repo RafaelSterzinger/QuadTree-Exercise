@@ -1,3 +1,0 @@
-# Teamaufgabe
-Aufgabenblatt 6
-
